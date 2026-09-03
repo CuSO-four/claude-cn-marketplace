@@ -1,0 +1,80 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-cn-marketplace",
+  "description": "中文社区精选的 Claude Code 资源库：MCP 服务器与 Skills 的官方分发渠道，一键安装",
+  "owner": {
+    "name": "CuSO-four",
+    "email": "324124177+CuSO-four@users.noreply.github.com"
+  },
+  "plugins": [
+    {
+      "name": "github-remote",
+      "description": "GitHub 官方 MCP 服务器（远程 HTTP 版）：仓库管理、Issue、Pull Request、代码搜索。无需本地安装，读取 GITHUB_PERSONAL_ACCESS_TOKEN 环境变量。",
+      "author": {
+        "name": "GitHub"
+      },
+      "category": "development",
+      "source": "./plugins/github-remote",
+      "homepage": "https://github.com/github/github-mcp-server",
+      "tags": [
+        "community-managed"
+      ]
+    },
+    {
+      "name": "context7",
+      "description": "Context7 文档检索 MCP（hosted 远程版，零配置）：查询 10 万+ 开源库的最新官方文档，让 Claude 不再用过时 API。",
+      "author": {
+        "name": "Upstash"
+      },
+      "category": "development",
+      "source": "./plugins/context7",
+      "homepage": "https://context7.com",
+      "tags": [
+        "community-managed"
+      ]
+    },
+    {
+      "name": "zh-office",
+      "description": "Anthropic 官方办公文档技能包：docx / pdf / pptx / xlsx 四件套，让 Claude 直接创建与编辑 Word、PDF、PowerPoint、Excel 文件（含中文文档场景说明）。",
+      "author": {
+        "name": "Anthropic"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/anthropics/skills.git",
+        "sha": "53048666b05b4799081517d00e09e0a2dd688678"
+      },
+      "strict": false,
+      "skills": [
+        "./skills/docx",
+        "./skills/pdf",
+        "./skills/pptx",
+        "./skills/xlsx"
+      ],
+      "homepage": "https://github.com/anthropics/skills",
+      "tags": [
+        "community-managed"
+      ]
+    },
+    {
+      "name": "desktop-commander",
+      "description": "桌面指挥官（Desktop Commander）MCP：终端命令、进程管理、文件操作，支持文本/代码/PDF/DOCX/Excel/图片与结构化数据，让 Claude 操作你的电脑文件系统与命令环境。",
+      "author": {
+        "name": "Desktop Commander"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/wonderwhy-er/DesktopCommanderMCP.git",
+        "path": "plugins/claude",
+        "ref": "main",
+        "sha": "ea8e9a47440ccffefede7060e0ddb490540f414d"
+      },
+      "homepage": "https://desktopcommander.app",
+      "tags": [
+        "community-managed"
+      ]
+    }
+  ]
+}

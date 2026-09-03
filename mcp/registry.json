@@ -1,0 +1,184 @@
+{
+  "name": "claude-cn-mcp-registry",
+  "description": "精选 MCP 服务器清单（中文）：官方参考实现、官方远程、需 API Key 的服务型，附安装命令",
+  "updated": "2026-09-03",
+  "groups": [
+    {
+      "id": "official-reference",
+      "title": "官方参考实现（本地运行，零 Key）",
+      "source": "https://github.com/modelcontextprotocol/servers",
+      "note": "官方 modelcontextprotocol/servers 仓库维护的 7 个参考服务器中收录 6 个（跳过测试用 Everything）。参考实现适合学习与本地任务，生产环境请评估。",
+      "items": [
+        {
+          "name": "filesystem",
+          "desc": "让 Claude 在指定目录范围内读写本地文件（沙箱式受控访问，路径参数必须给绝对路径）。",
+          "runtime": "npx",
+          "install": "claude mcp add filesystem npx -y @modelcontextprotocol/server-filesystem C:/Users/<你的用户名>/Documents",
+          "env": [],
+          "needsKey": false,
+          "repo": "https://github.com/modelcontextprotocol/servers"
+        },
+        {
+          "name": "memory",
+          "desc": "给 Claude 一个可持久化的知识图谱记忆（实体/关系），跨会话记住你的偏好与项目背景。",
+          "runtime": "npx",
+          "install": "claude mcp add memory npx -y @modelcontextprotocol/server-memory",
+          "env": [
+            "MEMORY_FILE_PATH"
+          ],
+          "note": "已知坑：读取的是 MEMORY_FILE_PATH（不是 MEMORY_FILE），且务必设置为绝对路径，否则知识图谱会落在 npx 临时缓存里被清掉。",
+          "needsKey": false,
+          "repo": "https://github.com/modelcontextprotocol/servers"
+        },
+        {
+          "name": "fetch",
+          "desc": "抓取网页并转换为干净的 Markdown 供 Claude 阅读，适合查文档、读文章。",
+          "runtime": "npx",
+          "install": "claude mcp add fetch npx -y @modelcontextprotocol/server-fetch",
+          "env": [],
+          "needsKey": false,
+          "repo": "https://github.com/modelcontextprotocol/servers"
+        },
+        {
+          "name": "git",
+          "desc": "Git 操作服务器：读提交历史、查看差异、搜索提交等（以只读分析为主，需 Python 环境）。",
+          "runtime": "uvx",
+          "install": "claude mcp add git uvx mcp-server-git --repository C:/Users/<你的用户名>/projects/my-repo",
+          "env": [],
+          "needsKey": false,
+          "repo": "https://github.com/modelcontextprotocol/servers"
+        },
+        {
+          "name": "time",
+          "desc": "提供当前时间与时区转换，避免 Claude 对本地时间想当然。",
+          "runtime": "npx",
+          "install": "claude mcp add time npx -y @modelcontextprotocol/server-time",
+          "env": [],
+          "needsKey": false,
+          "repo": "https://github.com/modelcontextprotocol/servers"
+        },
+        {
+          "name": "sequential-thinking",
+          "desc": "结构化思维链工具：把复杂问题拆解成可见的思考步骤，提升推理质量。",
+          "runtime": "npx",
+          "install": "claude mcp add sequential-thinking npx -y @modelcontextprotocol/server-sequential-thinking",
+          "env": [],
+          "needsKey": false,
+          "repo": "https://github.com/modelcontextprotocol/servers"
+        }
+      ]
+    },
+    {
+      "id": "official-remote",
+      "title": "官方远程服务器（无需本地进程）",
+      "note": "远程（HTTP）服务器免安装免升级；注意均为第三方托管的官方端点，授权前请确认最小权限。",
+      "items": [
+        {
+          "name": "github-remote",
+          "desc": "GitHub 官方 MCP（远程版）：仓库、Issue、PR、代码搜索。运行后按提示在浏览器完成 OAuth 授权即可。",
+          "runtime": "http",
+          "install": "claude mcp add github --transport http https://api.githubcopilot.com/mcp/",
+          "env": [],
+          "note": "也可用 PAT：设置环境变量 GITHUB_PERSONAL_ACCESS_TOKEN。本 marketplace 另提供同名插件（github-remote），装插件后工具以 mcp__plugin_ 前缀呈现，与 claude mcp add 方式二选一即可。",
+          "needsKey": false,
+          "repo": "https://github.com/github/github-mcp-server"
+        },
+        {
+          "name": "context7",
+          "desc": "查询 10 万+ 开源库的当前官方文档（版本化拉取），匿名可用。",
+          "runtime": "http",
+          "install": "claude mcp add context7 --transport http https://mcp.context7.com/mcp",
+          "env": [
+            "CONTEXT7_API_KEY（可选，提高限额）"
+          ],
+          "needsKey": false,
+          "repo": "https://context7.com"
+        },
+        {
+          "name": "notion-remote",
+          "desc": "Notion 官方 MCP（远程版）：读写你的 Notion 页面与数据库。",
+          "runtime": "http",
+          "install": "claude mcp add notion --transport http https://mcp.notion.com/mcp",
+          "env": [],
+          "needsKey": false,
+          "note": "需要 Notion 账号，安装时按提示完成 OAuth 授权。",
+          "repo": "https://github.com/makenotion/notion-mcp-server"
+        }
+      ]
+    },
+    {
+      "id": "community-key",
+      "title": "社区/服务型（需 API Key 或浏览器环境）",
+      "note": "所有命令中的 env 值请用你自己的 Key 替换，或先用系统环境变量设好再重启 Claude Code。Key 只保存在本机配置，不会上传。",
+      "items": [
+        {
+          "name": "github-stdio",
+          "desc": "GitHub 官方 MCP（自建 stdio 版）：国内访问更稳的选择 —— 下载官方预编译二进制到本机（Windows 有 exe，macOS/Linux 有对应包），用 PAT 认证。大陆网络下载 GitHub Release 受限时可走镜像或代理。",
+          "runtime": "stdio",
+          "install": "claude mcp add github <github-mcp-server.exe 绝对路径> --env GITHUB_PERSONAL_ACCESS_TOKEN=ghp_你的token",
+          "env": [
+            "GITHUB_PERSONAL_ACCESS_TOKEN"
+          ],
+          "needsKey": true,
+          "keyUrl": "https://github.com/settings/tokens",
+          "repo": "https://github.com/github/github-mcp-server"
+        },
+        {
+          "name": "firecrawl",
+          "desc": "网页抓取/爬站/搜索转 Markdown，支持 JS 渲染与反爬处理，抓取质量高。",
+          "runtime": "npx",
+          "install": "claude mcp add firecrawl npx -y firecrawl-mcp",
+          "env": [
+            "FIRECRAWL_API_KEY"
+          ],
+          "needsKey": true,
+          "keyUrl": "https://firecrawl.dev",
+          "repo": "https://github.com/firecrawl/firecrawl-mcp-server"
+        },
+        {
+          "name": "exa",
+          "desc": "AI 原生搜索与深度研究：语义搜索网页、找论文/公司/人物。",
+          "runtime": "npx",
+          "install": "claude mcp add exa npx -y exa-mcp-server",
+          "env": [
+            "EXA_API_KEY"
+          ],
+          "needsKey": true,
+          "keyUrl": "https://exa.ai",
+          "repo": "https://github.com/exa-labs/exa-mcp-server"
+        },
+        {
+          "name": "apify",
+          "desc": "数千个现成爬虫（社媒/电商/地图等）与网页自动化工具的平台入口。",
+          "runtime": "npx",
+          "install": "claude mcp add apify npx -y apify-mcp-server",
+          "env": [
+            "APIFY_TOKEN"
+          ],
+          "needsKey": true,
+          "keyUrl": "https://apify.com",
+          "repo": "https://github.com/apify/apify-mcp-server"
+        },
+        {
+          "name": "playwright",
+          "desc": "微软官方浏览器自动化：让 Claude 真正操作 Chromium 页面（表单、测试、截图）。首次使用需先安装浏览器内核。",
+          "runtime": "npx",
+          "install": "claude mcp add playwright npx -y @playwright/mcp",
+          "env": [],
+          "note": "首次运行前执行 npx playwright install chromium 安装浏览器。",
+          "needsKey": false,
+          "repo": "https://github.com/microsoft/playwright-mcp"
+        },
+        {
+          "name": "antvis-chart",
+          "desc": "蚂蚁集团 AntV 出品的图表可视化 MCP（25+ 种图表），含配套 Skills，数据可视化场景。",
+          "runtime": "见上游 README",
+          "install": "",
+          "env": [],
+          "needsKey": false,
+          "repo": "https://github.com/antvis/mcp-server-chart"
+        }
+      ]
+    }
+  ]
+}

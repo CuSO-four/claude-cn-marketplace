@@ -1,0 +1,7 @@
+{
+  "name": "github-remote",
+  "description": "GitHub 官方 MCP 服务器（远程 HTTP 版）：仓库管理、Issue、Pull Request、代码搜索。本条目由 claude-cn-marketplace 社区镜像收录，插件内容与 MCP 配置源自 anthropics/claude-plugins-public 的官方 github 插件。",
+  "author": {
+    "name": "GitHub"
+  }
+}
