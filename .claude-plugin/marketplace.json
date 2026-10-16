@@ -75,6 +75,27 @@
       "tags": [
         "community-managed"
       ]
+    },
+    {
+      "name": "doc2x-mcp",
+      "description": "Doc2X 官方文档处理 Skill：指导调用 MCP 工具解析 PDF/图片、导出文档与提取版面 JSON。需另外配置 Doc2X MCP Server 和 API Key，API 按用量计费。",
+      "author": {
+        "name": "NoEdgeAI"
+      },
+      "category": "productivity",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/NoEdgeAI/doc2x-mcp.git",
+        "sha": "263da5a22f9c64129229a8704505cde85ad5bfc6"
+      },
+      "strict": false,
+      "skills": [
+        "./skills/doc2x-mcp"
+      ],
+      "homepage": "https://github.com/NoEdgeAI/doc2x-mcp",
+      "tags": [
+        "community-managed"
+      ]
     }
   ]
 }

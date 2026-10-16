@@ -14,6 +14,7 @@
 
 - 插件可能包含 **Skills 指令、MCP 服务器配置、乃至可执行代码**。安装任何插件前，请先浏览该插件的来源仓库与本仓库中对应的说明文件。
 - 本仓库**只收录、不修改**上游内容：远程条目以固定 commit（sha）直接引用上游仓库，本地条目标注原始出处。收录 ≠ 背书，请自行评估第三方来源。
+- Doc2X 条目引用 NoEdgeAI 官方 Skill 指令；实际解析由用户另行配置的 Doc2X MCP Server 调用云端 API 完成，需自行评估文档内容与上传范围，详见[条目说明](plugins/doc2x-mcp/README.md)。
 - 涉及凭据的配置一律使用 `${ENV_VAR}` 占位，不会（也不应）出现真实 Key。
 
 ---
@@ -52,6 +53,7 @@ claude plugin install <插件名>@claude-cn-marketplace
 | [github-remote](plugins/github-remote/README.md) | MCP（远程 HTTP） | GitHub 官方 MCP 服务器：仓库 / Issue / PR / 代码搜索 | [github/github-mcp-server](https://github.com/github/github-mcp-server) | `claude plugin install github-remote@claude-cn-marketplace` |
 | zh-office | Skills（docx/pdf/pptx/xlsx） | Anthropic 官方办公文档技能四件套：让 Claude 直接创建编辑 Word / PDF / PowerPoint / Excel | [anthropics/skills](https://github.com/anthropics/skills) | `claude plugin install zh-office@claude-cn-marketplace` |
 | desktop-commander | MCP（本地 stdio） | 终端命令、进程、文件操作：让 Claude 安全地操作你的电脑 | [DesktopCommanderMCP](https://desktopcommander.app) | `claude plugin install desktop-commander@claude-cn-marketplace` |
+| [doc2x-mcp](plugins/doc2x-mcp/README.md) | Skill（文档处理） | Doc2X 官方 PDF/图片解析与导出工作流技能；需另配 MCP Server 和 API Key，API 按用量计费 | [NoEdgeAI/doc2x-mcp](https://github.com/NoEdgeAI/doc2x-mcp) | `claude plugin install doc2x-mcp@claude-cn-marketplace` |
 
 > 插件内的 MCP 服务器装好后，工具以 `mcp__plugin_<插件>_<服务器>__<工具>` 形式出现；想用普通 `claude mcp add` 形式（不带插件前缀）则参考 [MCP 精选清单](mcp/README.md)，两者效果等价、二选一即可。
 
